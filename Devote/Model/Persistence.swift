@@ -28,4 +28,26 @@ struct PersistenceController {
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+    
+    // MARK: - PREVIEW
+    @MainActor
+    static let preview: PersistenceController = {
+        let result = PersistenceController(inMemory: true)
+        let viewContext = result.container.viewContext
+        for i in 0..<5 {
+            let newItem = Items(context: viewContext)
+            newItem.timestamp = Date()
+            newItem.task = "Sample task No\(i)"
+            newItem.completion = false
+            newItem.id = UUID()
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return result
+    }()
 }
