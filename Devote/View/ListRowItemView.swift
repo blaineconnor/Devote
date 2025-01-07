@@ -31,7 +31,7 @@ struct ListRowItemView: View {
             
             Spacer()
         }
-        .contentShape(Rectangle()) // Tüm alanın tıklanabilir olmasını sağlar
+        .contentShape(Rectangle())
         .onTapGesture {
             toggleCompletion()
         }
